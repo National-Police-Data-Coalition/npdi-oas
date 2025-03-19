@@ -325,7 +325,7 @@ components:
     NameFilter:
       type: object
       description: >
-        An advanced filter that can be applied to a officer list request.
+        An advanced filter that can be applied to an officer list request.
       properties:
         first:
           type: string
@@ -346,7 +346,7 @@ components:
     LocationFilter:
       type: object
       description: >
-        An advanced filter that can be applied to a officer list request.
+        An advanced filter that can be applied to an officer list request.
       properties:
         state:
           type: string
@@ -408,7 +408,7 @@ components:
     StateIdFilter:
       type: object
       description: >
-        An advanced filter that can be applied to a officer list request.
+        An advanced filter that can be applied to an officer list request.
       properties:
         state:
           type: string

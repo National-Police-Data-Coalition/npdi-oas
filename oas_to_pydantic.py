@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from typing import Dict, List, Set, Tuple
-
 import argparse
 from copy import deepcopy
 import yaml
@@ -16,7 +14,7 @@ class OASModelGenerator:
         self.oas = oas
         self.verbose = verbose
 
-    def parse_property(self, prop_name, prop_details) -> Tuple[str, str, Dict[str, Set[str]], Set[str]]:
+    def parse_property(self, prop_name, prop_details) -> tuple[str, str, dict[str, set[str]], set[str]]:
         """Parse a single property from the schema to
         generate a Pydantic field."""
         pydantic_type_map = {
@@ -24,8 +22,8 @@ class OASModelGenerator:
             "number": "float",
             "integer": "int",
             "boolean": "bool",
-            "array": "List",
-            "object": "Dict"
+            "array": "list",
+            "object": "dict"
         }
 
         # file: class
@@ -40,14 +38,14 @@ class OASModelGenerator:
                 for file, deps in _ex.items():
                     external_deps[file] = external_deps.get(file, set()).union(deps)
                 internal_deps.update(_in)
-                return f"List[{items_type}]", prop_details.get('description'), external_deps, internal_deps
+                return f"list[{items_type}]", prop_details.get('description'), external_deps, internal_deps
             elif prop_details['type'] == "object":
                 if 'properties' in prop_details:
                     # For nested objects, we'll use
-                    # Dict[str, Any] for simplicity.
-                    return "Dict[str, Any]", prop_details.get('description'), external_deps, internal_deps
+                    # dict[str, Any] for simplicity.
+                    return "dict[str, Any]", prop_details.get('description'), external_deps, internal_deps
                 else:
-                    return "Dict[str, Any]", prop_details.get('description'), external_deps, internal_deps
+                    return "dict[str, Any]", prop_details.get('description'), external_deps, internal_deps
             else:
                 return prop_type, prop_details.get('description'), external_deps, internal_deps
         elif '$ref' in prop_details:
@@ -165,7 +163,7 @@ class OASModelGenerator:
 
         return combined_properties, required_props, parent_classes, internal_deps, external_deps
 
-    def generate_pydantic_model(self, schema_name, schema_details, indent=4) -> Tuple[str, Dict[str, Set[str]], Set[str]]:
+    def generate_pydantic_model(self, schema_name, schema_details, indent=4) -> tuple[str, dict[str, set[str]], set[str]]:
         """Generate a Pydantic model for a given schema."""
         external_deps = dict()
         internal_deps = set()
@@ -218,7 +216,7 @@ class OASModelGenerator:
 
         return class_def, external_deps, internal_deps
 
-    def generate_models_from_oas(self) -> Tuple[List[str], Dict[str, Set[str]]]:
+    def generate_models_from_oas(self) -> tuple[list[str], dict[str, set[str]]]:
         """Generate Pydantic models from the OAS components/schemas."""
         schemas = self.oas.get('components', {}).get('schemas', {})
 
@@ -320,9 +318,9 @@ def main():
     # Add necessary imports at the top of the output file
     import_statements = [
         "from pydantic import BaseModel, Field",
-        "from typing import List, Optional, Dict, Any, Union",
+        "from typing import Any",
     ]
-    import_statements.extend([f"from .{file} import {', '.join(deps)}" for file, deps in external_deps.items()])
+    import_statements.extend([f"from {file} import {', '.join(deps)}" for file, deps in external_deps.items()])
     import_statements.extend(["", ""])
 
     try:
