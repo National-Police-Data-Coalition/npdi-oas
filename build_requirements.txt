@@ -1,0 +1,4 @@
+build
+pyyaml
+setuptools
+twine
