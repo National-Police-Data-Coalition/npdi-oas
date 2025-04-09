@@ -320,7 +320,7 @@ def main():
         "from pydantic import BaseModel, Field",
         "from typing import Any",
     ]
-    import_statements.extend([f"from {file} import {', '.join(deps)}" for file, deps in external_deps.items()])
+    import_statements.extend([f"from .{file} import {', '.join(deps)}" for file, deps in external_deps.items()])
     import_statements.extend(["", ""])
 
     try:

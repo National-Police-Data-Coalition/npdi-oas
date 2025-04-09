@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='npdi_oas',
-    version='0.0.2',
+    version='0.0.4',
     packages=['npdi_oas'],
     package_dir={'npdi_oas': 'src_gen'},
     url='https://github.com/codeforboston/police-data-trust/tree/main/oas',
