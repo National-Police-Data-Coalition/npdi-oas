@@ -11,3 +11,5 @@ python oas_to_pydantic.py models/complaints.yaml src_gen/complaints.py
 python oas_to_pydantic.py models/officers.yaml src_gen/officers.py
 python oas_to_pydantic.py models/agencies.yaml src_gen/agencies.py
 python oas_to_pydantic.py models/litigation.yaml src_gen/litigation.py
+python oas_to_pydantic.py models/sources.yaml src_gen/sources.py
+python oas_to_pydantic.py models/users.yaml src_gen/users.py
